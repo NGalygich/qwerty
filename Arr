@@ -1,0 +1,5 @@
+public class EntryGridView
+{
+    string City {get; set;}
+    public double[] ValueMonth { get; set; }
+}
