@@ -18,12 +18,7 @@ namespace P_1
 {
     public partial class MainWindow : Window
     {
-        // List<PaymentPlan> paymentPlanList = new List<PaymentPlan>();
-        // List<WorkDaysMerc> workDaysMercList = new List<WorkDaysMerc>();
-        // List<MobileComm> mobileCommList = new List<MobileComm>();
         List<EntryGrid> entryGridList = new List<EntryGrid>();
-        //List<rpt_InfProfitabilityOVL> entriesDb = new List<rpt_InfProfitabilityOVL>();
-
         public string[] city = new string[] 
         {
             "Артем",                    //0
@@ -44,8 +39,6 @@ namespace P_1
             "Хабаровск",                //15
             "Южно-Сахалинск"            //16
         };
-
-        //public string[] Month = new string[] { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
 
         public MainWindow()
         {
@@ -70,113 +63,15 @@ namespace P_1
             }
 
         }
-
         private void comboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e) // кнопка выбора года
         {
 
-        }
-                //EntryGridView[] entryGridView;
-                // for (int i = entryGridView.ValueMonth.Count - 1; i >= 0; i--)
-                // {
-                //     entryGridView.ValueMonth[i] = 0.0;
-                // }
-                
-                // for (int i = entriesDb.Count - 1; i >= 0; i--)
-                // {
-                //     int _city = entriesDb[i].City;
-                //     int _month = entriesDb[i].MonthEntry;
-                //     //double value = 0;
-                //     //Grid1.Rows.Add(city[j], valueentriesDb[i].YearEntry)
-                //     entryGridView[_city].ValueMonth[_month] += entriesDb[i].PymtPlan;
-                // }
-                // // private CurrencyManager currencyManager=null;
-                // // currencyManager = (CurrencyManager)dataGrid1.BindingContext[entryGridView];
-                //Grid1.DataSource = entryGridView;
-
-                
-                // List<EntryGridView> list = entryGridView.ToList<EntryGridView>();
-                // Grid1.ItemsSource = list;
-
-                // for (int i = 0; i < entryGridView.Count; i++)
-                // {
-                //     Grid1.Rows.Add
-                //     (
-                //         entryGridView[i].City[i], 
-                //         entryGridView[i].ValueMonth[0],
-                //         entryGridView[i].ValueMonth[1],
-                //         entryGridView[i].ValueMonth[2],
-                //         entryGridView[i].ValueMonth[3],
-                //         entryGridView[i].ValueMonth[4],
-                //         entryGridView[i].ValueMonth[5],
-                //         entryGridView[i].ValueMonth[6],
-                //         entryGridView[i].ValueMonth[7],
-                //         entryGridView[i].ValueMonth[8],
-                //         entryGridView[i].ValueMonth[9],
-                //         entryGridView[i].ValueMonth[10],
-                //         entryGridView[i].ValueMonth[11]
-                //     );
-                // }
-
-
-
-
+        }               
         private void comboBoxTypeInfo_SelectionChanged(object sender, SelectionChangedEventArgs e) // кнопка выбора параметра
         {
 
         }
-
-        
-        // {
-        //     // MessageBox.Show("Selected Item Text: " + comboBox2.SelectedItem.ToString() + "\n" + "Index: " + comboBox2.SelectedIndex.ToString());
-        //    // UpdateTable(1, comboBoxTypeInfo.SelectedIndex.ToString());
-        //    if (comboBoxTypeInfo.SelectedIndex.ToString() == "0")
-        //     {
-        //         foreach (string с in city)
-        //         {
-        //             paymentPlanList.Add(new PaymentPlan() 
-        //             { 
-        //                 City = с, 
-        //                 Jan = valueJan, 
-        //                 Feb = valueFeb, 
-        //                 Mar = valueMar, 
-        //                 Apr = valueApr, 
-        //                 May = valueMay, 
-        //                 Jun = valueJun, 
-        //                 Jul = valueJul, 
-        //                 Aug = valueAug, 
-        //                 Sep = valueSep, 
-        //                 Oct = valueOct, 
-        //                 Nov = valueNov, 
-        //                 Dec = valueDec 
-        //             });
-        //         }
-        //         //Grid1.ItemsSource = paymentPlanList;
-        //     }
-        //     else if (omboBoxTypeInfo.SelectedIndex.ToString() == "1")
-        //     {
-        //         foreach (string с in city)
-        //         {
-        //             workDaysMercList.Add(new WorkDaysMerc() { City = с, Jan = valueJan, Feb = valueFeb, Mar = valueMar, Apr = valueApr, May = valueMay, Jun = valueJun, Jul = valueJul, Aug = valueAug, Sep = valueSep, Oct = valueOct, Nov = valueNov, Dec = valueDec });
-        //         }
-        //         //Grid1.Columns.Clear();
-        //         //Grid1.ItemsSource = null; // пока не работает
-        //         //Grid1.Items.Refresh();
-        //         Grid1.ItemsSource = workDaysMercList;
-        //     }
-        //     else if (omboBoxTypeInfo.SelectedIndex.ToString() == "2")
-        //     {
-        //         foreach (string с in city)
-        //         {
-        //             mobileCommList.Add(new MobileComm() { City = с, Jan = valueJan, Feb = valueFeb, Mar = valueMar, Apr = valueApr, May = valueMay, Jun = valueJun, Jul = valueJul, Aug = valueAug, Sep = valueSep, Oct = valueOct, Nov = valueNov, Dec = valueDec });
-        //         }
-        //         //Grid1.Columns.Clear();
-        //         //Grid1.ItemsSource = null; // пока не работает
-        //         //Grid1.Items.Refresh();
-        //         Grid1.ItemsSource = mobileCommList;
-        //     }
-        // }
-
-        private void Button_Click(object sender, RoutedEventArgs e) // подключение и добавление запеисей в БД
+        private void ButtonUpdate_Click(object sender, RoutedEventArgs e) // обновление записей из БД в DataGrid
         {
             
             Grid1.ItemsSource = null;
@@ -207,9 +102,18 @@ namespace P_1
                         }
                     }
                 }
-
                 Grid1.ItemsSource = entryGridList;
+
             }
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e) // обновление записей из DataGrid в БД
+        {
+           // entryGridList = Grid1.ItemsSource.ToList();
+            
+        }
+
+            
 
 
 
@@ -265,103 +169,6 @@ namespace P_1
 
 
             
-        }
-
-        // void UpdateTable() // подключение к БД
-        // {
-        //     //tring startYear = "2019";
-        //     try
-        //     {
-        //         using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
-        //         {
-        //             // получаем объекты из бд 
-        //             var entriesDb = db.rpt_InfProfitabilityOVL.ToList();
-        //             //var entriesDbSort = entriesDb;
-        //             WorkDaysMerc workDaysMerc = new WorkDaysMerc();
-        //             for (int i = entriesDb.Count - 1; i >= 0; i--)
-        //             {
-
-        //                 // for (int j = 1; j<12; j++)
-        //                 // {
-        //                 //     if (entriesDb[i].MonthEntry == j) workDaysMerc.Jan += entriesDb[i].WorkDaysMerc;
-        //                 // }
-        //                 // switch (entriesDb[i].MonthEntry)
-        //                 // {
-        //                 //     case "январь":
-        //                 //         workDaysMerc.Jan += entriesDb[i].WorkDaysMerc;
-        //                 //         break;
-        //                 // }
-        //             }
-
-        //             if (typeComboBox == 0)
-        //             {
-        //                 //MessageBox.Show($"object: {entriesDb[0].Id} {entriesDb[0].City} {entriesDb[0].DateEntry}");
-        //                 //Console.WriteLine("Users list:");
-        //                 for (int i = entriesDbSort.Count - 1; i >= 0; i--)
-        //                 {
-        //                     //DateTime yearEntry = entriesDbSort[i].DateEntry;
-        //                     //if (Convert.ToString(yearEntry.Year) != info) entriesDbSort.RemoveAt(i);
-        //                     //if (entriesDbSort[i].YearEntry != )
-        //                     // EntrySort entrySort = new EntrySort 
-        //                     // { 
-        //                     //     City = entriesDbSort[i].City, 
-        //                     //     Year = Convert.ToString(entriesDbSort[i].DateEntry.Year),
-        //                     //     Month = Convert.ToString(entriesDbSort[i].DateEntry.Month) 
-        //                     // };
-        //                 }
-        //                 // foreach (rpt_InfProfitabilityOVL u in entriesDb)
-        //                 // {
-        //                 //     DateTime yearEntry = u.DateEntry;
-        //                 //     if (Convert.ToString(yearEntry.Year) == typeInfo)
-        //                 //     {
-        //                 //         var entriesDbSort = 
-        //                 //     }
-        //                 //    MessageBox.Show("object: {u.Id} {u.City} {u.DateEntry}");
-        //                 // }
-        //                 //MessageBox.Show("object: нет");
-
-
-        //                 //Grid1.Rows.Clear();
-        //                 //Grid1.Columns.Clear();
-        //                 //Grid1.ItemsSource = null; // пока не работает
-        //                 //Grid1.Items.Refresh();
-        //             }
-        //             else if (typeComboBox == 1)
-        //             {
-        //                 for (int i = entriesDbSort.Count - 1; i >= 0; i--)
-        //                 {
-        //                     DateTime yearEntry = entriesDbSort[i].DateEntry;
-        //                     switch(info)
-        //                     {
-        //                         case "1":
-        //                             paymentPlanList.Add(new PaymentPlan() 
-        //                             { 
-        //                                 City = entriesDbSort[i].City, 
-        //                                 // Year = Convert.ToString(entriesDbSort[i].DateEntry.Year),
-        //                                 // Month = Convert.ToString(entriesDbSort[i].DateEntry.Month) 
-        //                                 //string j = Convert.ToString(entriesDbSort[i].DateEntry.Month); 
-        //                             });
-        //                             break;
-        //                     }
-        //                     //paymentPlanList.Add(new PaymentPlan() { PartName = "crank arm", PartId = 1234 });
-        //                     // PaymentPlan paymentPlan = new PaymentPlan 
-        //                     // { 
-        //                     //     City = entriesDbSort[i].City, 
-        //                     //     Year = Convert.ToString(entriesDbSort[i].DateEntry.Year),
-        //                     //     Month = Convert.ToString(entriesDbSort[i].DateEntry.Month) 
-        //                     // };
-        //                     // if (Convert.ToString(yearEntry.Year) != info) entriesDbSort.RemoveAt(i);
-        //                 }
-        //             }
-
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         MessageBox.Show("Не удалось обновить данные из БД:" + ex.ToString());
-        //     }
-            
-        // }
-
+        
     }
 }

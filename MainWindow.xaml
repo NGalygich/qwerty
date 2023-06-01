@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
@@ -20,7 +20,8 @@
             <ColumnDefinition Width="0.05*"/>
             <ColumnDefinition Width="0.3*" MinWidth="250"/>
             <ColumnDefinition Width="0.3*" MinWidth="250"/>
-            <ColumnDefinition Width="0.3*" MinWidth="250"/>
+            <ColumnDefinition Width="0.3*" MinWidth="125"/>
+            <ColumnDefinition Width="0.3*" MinWidth="125"/>
             <ColumnDefinition Width="0.05*"/>
         </Grid.ColumnDefinitions>
         
@@ -38,10 +39,11 @@
             <ComboBox x:Name="comboBoxTypeInfo" Height="20" Width="230" Canvas.Left="10" SelectionChanged="comboBoxTypeInfo_SelectionChanged"/>
         </Canvas>
 
-        <Button x:Name="button1" Width="100" Height="20" Content="Обновить" Click="Button_Click" Grid.Column="3" Grid.Row="3" />
+        <Button x:Name="buttonUpdate" Width="100" Height="20" Content="Обновить" Click="ButtonUpdate_Click" Grid.Column="3" Grid.Row="3" />
+        <Button x:Name="buttonSave" Width="100" Height="20" Content="Сохранить" Click="ButtonSave_Click" Grid.Column="4" Grid.Row="3" />
 
-        <Canvas x:Name="ValuesInfo" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3">
-            <DataGrid x:Name="Grid1" Margin="0,0,0,0" Canvas.Left="0" Canvas.Top="0" ItemsSource="{Binding entriesDb}" SelectionMode="Single" SelectionUnit="Cell" AlternationCount="9999" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" >
+        <Canvas x:Name="ValuesInfo" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4">
+            <DataGrid x:Name="Grid1" Margin="0,0,0,0" Canvas.Left="0" Canvas.Top="0" ItemsSource="{Binding}" SelectionMode="Single" SelectionUnit="Cell" AlternationCount="9999" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" >
                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Город" FontSize="15" Binding="{Binding City}" Width="200"/>
