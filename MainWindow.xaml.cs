@@ -22,6 +22,7 @@ namespace P_1
         // List<WorkDaysMerc> workDaysMercList = new List<WorkDaysMerc>();
         // List<MobileComm> mobileCommList = new List<MobileComm>();
         List<EntryGrid> entryGridList = new List<EntryGrid>();
+        //List<rpt_InfProfitabilityOVL> entriesDb = new List<rpt_InfProfitabilityOVL>();
 
         public string[] city = new string[] 
         {
@@ -76,6 +77,10 @@ namespace P_1
              //       "Index: " + comboBox1.SelectedIndex.ToString());
             //UpdateTable(0, comboBoxYear.SelectedItem.ToString());
             //dateTime.ToString(EntryDB.dateTime);
+
+            entryGridList.Clear();
+            //entriesDb.Clear();
+
             using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
             {
                 //DataGrid Grid1 = new DataGrid();
@@ -255,7 +260,7 @@ namespace P_1
                     //rpt_InfProfitabilityOVL user2 = new rpt_InfProfitabilityOVL { City = "Alice", DateEntry = Convert.ToDateTime("2019-01-02 00:00:00.000") };
                 
                     // добавляем их в бд
-                    db.rpt_InfProfitabilityOVL.AddRange(user3, user4, user5, user6, user7, user8, user9);
+                    db.rpt_InfProfitabilityOVL.AddRange(user1, user2, user3, user4, user5, user6, user7, user8, user9);
                     db.SaveChanges();
                 }
             }
