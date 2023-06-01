@@ -78,31 +78,53 @@ namespace P_1
             Grid1.Items.Refresh();
             entryGridList.Clear();
 
+            for (int j = 0; j < city.Length; j++)
+            {
+                entryGridList.Add(new EntryGrid(city[j]));
+            }
+
             using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
             {
-                var entriesDb = db.rpt_InfProfitabilityOVL.ToList();                
-                for (int i = entriesDb.Count - 1; i >= 0; i--)
+                try
                 {
-                    if (Convert.ToString(entriesDb[i].YearEntry) != comboBoxYear.SelectedItem.ToString()) entriesDb.RemoveAt(i);
-                    else
+                    var entriesDb = db.rpt_InfProfitabilityOVL.ToList();                
+                    for (int i = entriesDb.Count - 1; i >= 0; i--)
                     {
-                        int _city = entriesDb[i].City;
-                        int _month = entriesDb[i].MonthEntry;
-                        switch(comboBoxTypeInfo.SelectedIndex.ToString())
+                        if (Convert.ToString(entriesDb[i].YearEntry) != comboBoxYear.SelectedItem.ToString()) entriesDb.RemoveAt(i);
+                        else
                         {
-                            case "0":
-                                entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].PymtPlan, _month));
-                                break;
-                            case "1":
-                                entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].WorkDaysMerc, _month));
-                                break;
-                            case "2":
-                                entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].CommServ, _month));
-                                break;
+                            int _city = entriesDb[i].City;
+                            int _month = entriesDb[i].MonthEntry;
+                            
+                            for (int j = entryGridList.Count; j >= 0; j--)
+                            {
+                                if (entryGridList[j].City == city[_city])
+                                {
+                                    switch(comboBoxTypeInfo.SelectedIndex.ToString())
+                                    {
+                                        case "0":
+                                            entryGridList[j].Values[_month] = entriesDb[i].PymtPlan; //entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].PymtPlan, _month));
+                                            break;
+                                        case "1":
+                                            entryGridList[j].Values[_month] = entriesDb[i].WorkDaysMerc; //entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].WorkDaysMerc, _month));
+                                            break;
+                                        case "2":
+                                            entryGridList[j].Values[_month] = entriesDb[i].CommServ; //entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].CommServ, _month));
+                                            break;
+                                    }
+                                    break;
+                                }
+                                
+                            }
                         }
                     }
+                    Grid1.ItemsSource = entryGridList;
                 }
-                Grid1.ItemsSource = entryGridList;
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+               
 
             }
         }

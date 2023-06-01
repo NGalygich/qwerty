@@ -8,14 +8,23 @@ public class EntryGrid
         set { values = value; }
     }
 
-    public EntryGrid(string _city, double _values, int _month)
+    // public EntryGrid(string _city, double _values, int _month)
+    // {
+    //     City = _city;
+    //     for (int i = 0; i < 12; i++)
+    //     {
+    //         if (i == _month - 1)
+    //             values[i] = _values;
+    //         else
+    //             values[i] = 0;
+    //     }
+        
+    // }
+    public EntryGrid(string _city)
     {
         City = _city;
         for (int i = 0; i < 12; i++)
         {
-            if (i == _month - 1)
-                values[i] = _values;
-            else
                 values[i] = 0;
         }
         
