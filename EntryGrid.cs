@@ -13,7 +13,7 @@ public class EntryGrid
         City = _city;
         for (int i = 0; i < 12; i++)
         {
-            if (i == _month)
+            if (i == _month - 1)
                 values[i] = _values;
             else
                 values[i] = 0;

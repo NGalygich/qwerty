@@ -73,62 +73,7 @@ namespace P_1
 
         private void comboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e) // кнопка выбора года
         {
-            //MessageBox.Show("Selected Item Text: " + comboBox1.SelectedItem.ToString() + "\n" +
-             //       "Index: " + comboBox1.SelectedIndex.ToString());
-            //UpdateTable(0, comboBoxYear.SelectedItem.ToString());
-            //dateTime.ToString(EntryDB.dateTime);
 
-            entryGridList.Clear();
-            //entriesDb.Clear();
-
-            using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
-            {
-                //DataGrid Grid1 = new DataGrid();
-                var entriesDb = db.rpt_InfProfitabilityOVL.ToList();
-                // var entrys = new EntryGrid[] 
-                // { 
-                //     new EntryGrid("Артем"), 
-                //     new EntryGrid("Белогорск"), 
-                //     new EntryGrid("Биробиджан"), 
-                //     new EntryGrid("Благовещенск"), 
-                //     new EntryGrid("Владивосток"), 
-                //     new EntryGrid("Дальнереченск"), 
-                //     new EntryGrid("Елизово"), 
-                //     new EntryGrid("Комсомольск-на-Амуре"), 
-                //     new EntryGrid("Магадан"), 
-                //     new EntryGrid("Михайловка"), 
-                //     new EntryGrid("Находка"), 
-                //     new EntryGrid("П-Камчатский"), 
-                //     new EntryGrid("Свободный"), 
-                //     new EntryGrid("Спасск-Дальний"), 
-                //     new EntryGrid("Уссурийск"), 
-                //     new EntryGrid("Хабаровск"),
-                //     new EntryGrid("Южно-Сахалинск")
-                // };
-               
-                //double[] value = new double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-                
-                for (int i = entriesDb.Count - 1; i >= 0; i--)
-                {
-                    if (Convert.ToString(entriesDb[i].YearEntry) != comboBoxYear.SelectedItem.ToString()) entriesDb.RemoveAt(i);
-                    else
-                    {
-                        int _city = entriesDb[i].City;
-                        int _month = entriesDb[i].MonthEntry;
-                        //value[_month] = entriesDb[i].PymtPlan; 
-                        //EntryGrid entryGrid = new EntryGrid();
-                        //EntryGrid entryGrid = new EntryGrid[j] {new EntryGrid(city[_city])};
-                        entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].PymtPlan, _month));
-                        //entryGrid.City = city[_city];
-                        //entryGrid.
-                        //entryGrid.
-                        //Array.Copy( value, value.GetLowerBound(0), entryGrid.ValueMonth, entryGrid.ValueMonth.GetLowerBound(0), 1 );
-                        //entryGridList.Add(entryGrid);
-                    }
-                }
-
-                Grid1.ItemsSource = entryGridList;
-            }
         }
                 //EntryGridView[] entryGridView;
                 // for (int i = entryGridView.ValueMonth.Count - 1; i >= 0; i--)
@@ -177,17 +122,10 @@ namespace P_1
 
         private void comboBoxTypeInfo_SelectionChanged(object sender, SelectionChangedEventArgs e) // кнопка выбора параметра
         {
-            // using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
-            // {
-            //     var entriesDb = db.rpt_InfProfitabilityOVL.ToList();
 
-            //     for (int i = entriesDb.Count - 1; i >= 0; i--)
-            //     {
-            //         if (Convert.ToString(entriesDb[i].YearEntry) != comboBoxYear.SelectedItem.ToString()) entriesDb.RemoveAt(i);
-            //     }
-            //     Grid1.ItemsSource = entriesDb;
-            // }
         }
+
+        
         // {
         //     // MessageBox.Show("Selected Item Text: " + comboBox2.SelectedItem.ToString() + "\n" + "Index: " + comboBox2.SelectedIndex.ToString());
         //    // UpdateTable(1, comboBoxTypeInfo.SelectedIndex.ToString());
@@ -240,53 +178,89 @@ namespace P_1
 
         private void Button_Click(object sender, RoutedEventArgs e) // подключение и добавление запеисей в БД
         {
+            
+            Grid1.ItemsSource = null;
+            Grid1.Items.Refresh();
+            entryGridList.Clear();
+
+            using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
+            {
+                var entriesDb = db.rpt_InfProfitabilityOVL.ToList();                
+                for (int i = entriesDb.Count - 1; i >= 0; i--)
+                {
+                    if (Convert.ToString(entriesDb[i].YearEntry) != comboBoxYear.SelectedItem.ToString()) entriesDb.RemoveAt(i);
+                    else
+                    {
+                        int _city = entriesDb[i].City;
+                        int _month = entriesDb[i].MonthEntry;
+                        switch(comboBoxTypeInfo.SelectedIndex.ToString())
+                        {
+                            case "0":
+                                entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].PymtPlan, _month));
+                                break;
+                            case "1":
+                                entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].WorkDaysMerc, _month));
+                                break;
+                            case "2":
+                                entryGridList.Add(new EntryGrid(city[_city], entriesDb[i].CommServ, _month));
+                                break;
+                        }
+                    }
+                }
+
+                Grid1.ItemsSource = entryGridList;
+            }
+
+
+
+
             //EntryDB entryDB = new EntryDB();
             //entryDB.
-            try
-            {
-                using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
-                {
-                    rpt_InfProfitabilityOVL user1 = new rpt_InfProfitabilityOVL { City = 0, DateEntry = Convert.ToDateTime("2019-12-01 00:00:00.000"), YearEntry = 2019,  MonthEntry = 12, PymtPlan = 5500,  WorkDaysMerc = 10, CommServ = 1300.85};
-                    rpt_InfProfitabilityOVL user2 = new rpt_InfProfitabilityOVL { City = 1, DateEntry = Convert.ToDateTime("2019-12-01 00:00:00.000"), YearEntry = 2019,  MonthEntry = 12, PymtPlan = 2300,  WorkDaysMerc = 4, CommServ = 850.50};
-                    rpt_InfProfitabilityOVL user3 = new rpt_InfProfitabilityOVL { City = 2, DateEntry = Convert.ToDateTime("2019-12-01 00:00:00.000"), YearEntry = 2019,  MonthEntry = 12, PymtPlan = 4000,  WorkDaysMerc = 8, CommServ = 780};
-                    rpt_InfProfitabilityOVL user4 = new rpt_InfProfitabilityOVL { City = 0, DateEntry = Convert.ToDateTime("2020-01-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 1, PymtPlan = 7000,  WorkDaysMerc = 12, CommServ = 2500};
-                    rpt_InfProfitabilityOVL user5 = new rpt_InfProfitabilityOVL { City = 1, DateEntry = Convert.ToDateTime("2020-01-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 1, PymtPlan = 4600,  WorkDaysMerc = 9, CommServ = 950.85};
-                    rpt_InfProfitabilityOVL user6 = new rpt_InfProfitabilityOVL { City = 2, DateEntry = Convert.ToDateTime("2020-01-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 1, PymtPlan = 5500,  WorkDaysMerc = 10, CommServ = 850};
-                    rpt_InfProfitabilityOVL user7 = new rpt_InfProfitabilityOVL { City = 0, DateEntry = Convert.ToDateTime("2020-02-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 2, PymtPlan = 6200,  WorkDaysMerc = 12, CommServ = 1500.50};
-                    rpt_InfProfitabilityOVL user8 = new rpt_InfProfitabilityOVL { City = 1, DateEntry = Convert.ToDateTime("2020-02-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 2, PymtPlan = 3100,  WorkDaysMerc = 6, CommServ = 1000};
-                    rpt_InfProfitabilityOVL user9 = new rpt_InfProfitabilityOVL { City = 2, DateEntry = Convert.ToDateTime("2020-02-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 2, PymtPlan = 3800,  WorkDaysMerc = 7, CommServ = 1250};
+            // try
+            // {
+            //     using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
+            //     {
+            //         rpt_InfProfitabilityOVL user1 = new rpt_InfProfitabilityOVL { City = 0, DateEntry = Convert.ToDateTime("2019-12-01 00:00:00.000"), YearEntry = 2019,  MonthEntry = 12, PymtPlan = 5500,  WorkDaysMerc = 10, CommServ = 1300.85};
+            //         rpt_InfProfitabilityOVL user2 = new rpt_InfProfitabilityOVL { City = 1, DateEntry = Convert.ToDateTime("2019-12-01 00:00:00.000"), YearEntry = 2019,  MonthEntry = 12, PymtPlan = 2300,  WorkDaysMerc = 4, CommServ = 850.50};
+            //         rpt_InfProfitabilityOVL user3 = new rpt_InfProfitabilityOVL { City = 2, DateEntry = Convert.ToDateTime("2019-12-01 00:00:00.000"), YearEntry = 2019,  MonthEntry = 12, PymtPlan = 4000,  WorkDaysMerc = 8, CommServ = 780};
+            //         rpt_InfProfitabilityOVL user4 = new rpt_InfProfitabilityOVL { City = 0, DateEntry = Convert.ToDateTime("2020-01-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 1, PymtPlan = 7000,  WorkDaysMerc = 12, CommServ = 2500};
+            //         rpt_InfProfitabilityOVL user5 = new rpt_InfProfitabilityOVL { City = 1, DateEntry = Convert.ToDateTime("2020-01-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 1, PymtPlan = 4600,  WorkDaysMerc = 9, CommServ = 950.85};
+            //         rpt_InfProfitabilityOVL user6 = new rpt_InfProfitabilityOVL { City = 2, DateEntry = Convert.ToDateTime("2020-01-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 1, PymtPlan = 5500,  WorkDaysMerc = 10, CommServ = 850};
+            //         rpt_InfProfitabilityOVL user7 = new rpt_InfProfitabilityOVL { City = 0, DateEntry = Convert.ToDateTime("2020-02-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 2, PymtPlan = 6200,  WorkDaysMerc = 12, CommServ = 1500.50};
+            //         rpt_InfProfitabilityOVL user8 = new rpt_InfProfitabilityOVL { City = 1, DateEntry = Convert.ToDateTime("2020-02-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 2, PymtPlan = 3100,  WorkDaysMerc = 6, CommServ = 1000};
+            //         rpt_InfProfitabilityOVL user9 = new rpt_InfProfitabilityOVL { City = 2, DateEntry = Convert.ToDateTime("2020-02-01 00:00:00.000"), YearEntry = 2020,  MonthEntry = 2, PymtPlan = 3800,  WorkDaysMerc = 7, CommServ = 1250};
                     
 
-                    //rpt_InfProfitabilityOVL user2 = new rpt_InfProfitabilityOVL { City = "Alice", DateEntry = Convert.ToDateTime("2019-01-02 00:00:00.000") };
+            //         //rpt_InfProfitabilityOVL user2 = new rpt_InfProfitabilityOVL { City = "Alice", DateEntry = Convert.ToDateTime("2019-01-02 00:00:00.000") };
                 
-                    // добавляем их в бд
-                    db.rpt_InfProfitabilityOVL.AddRange(user1, user2, user3, user4, user5, user6, user7, user8, user9);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("добавляем их в бд:" + ex.ToString());
-            }
-            try
-            {
-                using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
-                {
-                    // получаем объекты из бд 
-                    var users = db.rpt_InfProfitabilityOVL.ToList();
-                    //MessageBox.Show($"object: {users[0].Id} {users[0].City} {users[0].DateEntry}");
-                    //Console.WriteLine("Users list:");
-                    //foreach (rpt_InfProfitabilityOVL u in users)
-                    //{
-                    //    MessageBox.Show("object: {u.Id} {u.City} {u.DateEntry}");
-                    //}
-                    MessageBox.Show("object: добавил");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("получаем объекты из бд:" + ex.ToString());
-            }
+            //         // добавляем их в бд
+            //         db.rpt_InfProfitabilityOVL.AddRange(user1, user2, user3, user4, user5, user6, user7, user8, user9);
+            //         db.SaveChanges();
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     MessageBox.Show("добавляем их в бд:" + ex.ToString());
+            // }
+            // try
+            // {
+            //     using (rpt_InfProfitabilityOVLContext db = new rpt_InfProfitabilityOVLContext())
+            //     {
+            //         // получаем объекты из бд 
+            //         var users = db.rpt_InfProfitabilityOVL.ToList();
+            //         //MessageBox.Show($"object: {users[0].Id} {users[0].City} {users[0].DateEntry}");
+            //         //Console.WriteLine("Users list:");
+            //         //foreach (rpt_InfProfitabilityOVL u in users)
+            //         //{
+            //         //    MessageBox.Show("object: {u.Id} {u.City} {u.DateEntry}");
+            //         //}
+            //         MessageBox.Show("object: добавил");
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     MessageBox.Show("получаем объекты из бд:" + ex.ToString());
+            // }
            
 
 
